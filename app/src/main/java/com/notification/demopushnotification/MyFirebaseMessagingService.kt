@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -21,6 +22,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     //attach the notification created with the custom layout
     // show the notification
 
+    // 3 Showing The Notification
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.notification != null) {
             generateNotification(
@@ -29,7 +31,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
         }
     }
-
+    //2 attaching the notification
     fun getRemoteView(title: String, message: String): RemoteViews {
         val remoteView = RemoteViews("com.notification.demopushnotification", R.layout.notification)
         remoteView.setTextViewText(R.id.title, title)
@@ -39,6 +41,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     }
 
+    // 1 generating the notification
     fun generateNotification(title: String, message: String) {
 
         val intent = Intent(this, MainActivity::class.java)
@@ -48,7 +51,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
 
         //channel id channel name : this are the features introduced after (Oreo) this makes notifications more clear
-        // this are constants oin all over the app
+        // this are constants in all over the app
+
 
         var builder: NotificationCompat.Builder =
             NotificationCompat.Builder(applicationContext, chanelId)
@@ -56,10 +60,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setAutoCancel(true)
                 .setVibrate(
                     longArrayOf(
-                        10000,
-                        10000,
-                        10000,
-                        10000
+                        1000,
+                        1000,
+                        1000,
+                        1000
                     )
                 ) // 4 X 1000 = 1TIME VIBRATE THEN WAIT THEN AGAIN SAME PROCESS
                 .setOnlyAlertOnce(true)
